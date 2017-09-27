@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS 
+﻿#define _CRT_SECURE_NO_WARNINGS 
 #include <stdio.h> 
 
 int main() 
@@ -22,9 +22,11 @@ metr = mm / 1000;
 arsh = (metr * 100) / 71.1; 
 
 printf("%f Метров \n", a, metr); 
-printf("%f Аршин \n", a, arsh); 
+printf("%f Аршин \n", a, arsh);  
 
 system("pause"); 
 return 0; 
+
+
 
 }
