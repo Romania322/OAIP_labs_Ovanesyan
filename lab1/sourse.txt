@@ -1,0 +1,30 @@
+#define _CRT_SECURE_NO_WARNINGS 
+#include <stdio.h> 
+
+int main() 
+{ 
+system("chcp 1251"); 
+system("cls"); 
+
+float a = 0,rez, mm, metr, arsh; 
+
+printf("Введите колличество...:"); 
+do { 
+rez = scanf("%f", &a); 
+if (!rez) { 
+printf("Ошибка ввода. Повторите попытку ввода: "); 
+while (getchar() != '\n');//очистка потока 
+} 
+} while (rez != 1);//пока первыйсимвол-не число 
+
+mm = a * 25.4; 
+metr = mm / 1000; 
+arsh = (metr * 100) / 71.1; 
+
+printf("%f dsdfsdfsd \n", a, metr); 
+printf("%f sdfsddsf \n", a, arsh); 
+
+system("pause"); 
+return 0; 
+
+}
