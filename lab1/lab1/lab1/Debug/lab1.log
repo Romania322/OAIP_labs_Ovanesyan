@@ -1,0 +1,7 @@
+﻿  Source.cpp
+d:\sfedu2\lab1\lab1\source.cpp(6): warning C4013: system: нет определения; предполагается "extern" с возвратом типа "int"
+d:\sfedu2\lab1\lab1\source.cpp(13): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\sfedu2\lab1\lab1\source.cpp(20): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+d:\sfedu2\lab1\lab1\source.cpp(22): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+  lab1.vcxproj -> D:\sfedu2\lab1\Debug\lab1.exe
+  lab1.vcxproj -> D:\sfedu2\lab1\Debug\lab1.pdb (Partial PDB)
