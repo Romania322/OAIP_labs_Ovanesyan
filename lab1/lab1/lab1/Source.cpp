@@ -8,11 +8,11 @@ int main()
 
 	float a = 0, rez, mm, metr, arsh;
 
-	printf("Введите колличество дюймов:");
+	printf("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґСЋР№РјРѕРІ:");
 	do {
 		rez = scanf("%f", &a);
 		if (!rez) {
-			printf("Ошибка ввода. Повторите попытку ввода: ");
+			printf("РџРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ РІРІРѕРґР°: ");
 			while (getchar() != '\n');
 		}
 	} while (rez != 1);
@@ -21,8 +21,8 @@ int main()
 	metr = mm / 1000;
 	arsh = (metr * 100) / 71.1;
 
-	printf("%f Метров \n", metr);
-	printf("%f Аршин \n", arsh);
+	printf("%f РњРµС‚СЂРѕРІ \n", metr);
+	printf("%f Р”СЋР№РјРѕРІ \n", arsh);
 
 	system("pause");
 	return 0;
