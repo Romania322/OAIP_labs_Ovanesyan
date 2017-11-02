@@ -1,5 +1,7 @@
 /*
-
+  Ованесян Даниил Арменович КТБО 1-8
+  Лабораторная №2 вариант 4
+  Найти сумму всех положительных элементов массива
 */
 
 #define _CRT_SECURE_NO_WARNINGS 
@@ -8,20 +10,20 @@
 
 #define ARRAY_SIZE 100
 
-int function_enter(void); 
+int functionEnterArray(void); 
 
 int main() 
 { 
-  int sum = 0, size, check, chekSize; 
+  int sum = 0, size, chekSize; 
   printf("Enter nomber of the size:"); 
-  cheksize = function_enter(); 
+  chekSize = function_enter(); 
   int array[ARRAY_SIZE]; 
 
-  for (int i = 0; i < cheksize; i++) { 
+  for (int i = 0; i < chekSize; i++) { 
     printf("Enter element:"); 
     array[i] = function_enter(); 
   } 
-  for (int i = 0; i < cheksize; i++) 
+  for (int i = 0; i < chekSize; i++) 
   { 
     if (array[i] > 0) {
       sum += array[i]; 
