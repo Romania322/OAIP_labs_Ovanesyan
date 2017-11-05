@@ -14,16 +14,16 @@ int functionEnterArray(void);
 
 int main() 
 { 
-  int sum = 0, size, chekSize; 
+  int sum = 0, size, userLength; 
   printf("Enter nomber of the size:"); 
-  chekSize = functionEnterArray(); 
+  userLength = functionEnterArray(); 
   int array[ARRAY_SIZE]; 
 
-  for (int i = 0; i < chekSize; i++) { 
+  for (int i = 0; i < userLength; i++) { 
     printf("Enter element:"); 
     array[i] = functionEnterArray(); 
   } 
-  for (int i = 0; i < chekSize; i++) 
+  for (int i = 0; i < userLength; i++) 
   { 
     if (array[i] > 0) {
       sum += array[i]; 
