@@ -16,12 +16,12 @@ int main()
 { 
   int sum = 0, size, chekSize; 
   printf("Enter nomber of the size:"); 
-  chekSize = function_enter(); 
+  chekSize = functionEnterArray(); 
   int array[ARRAY_SIZE]; 
 
   for (int i = 0; i < chekSize; i++) { 
     printf("Enter element:"); 
-    array[i] = function_enter(); 
+    array[i] = functionEnterArray(); 
   } 
   for (int i = 0; i < chekSize; i++) 
   { 
@@ -35,14 +35,14 @@ int main()
   return 0; 
 } 
 
-int function_enter(void) { 
+int functionEnterArray(void) { 
   int number; 
   scanf("%d", &number); 
   
   if (getchar() != '\n') { 
     printf("Error number. Try again:"); 
     while (getchar() != '\n'); 
-    number = function_enter(); 
+    number = functionEnterArray(); 
   } 
   
   return number; 
