@@ -10,18 +10,18 @@
 
 #define ARRAY_SIZE 100
 
-int functionEnterArray(void); 
+int enterArray(void); 
 
 int main() 
 { 
   int sum = 0, size, userLength; 
   printf("Enter nomber of the size:"); 
-  userLength = functionEnterArray(); 
+  userLength =enterArray(); 
   int array[ARRAY_SIZE]; 
 
   for (int i = 0; i < userLength; i++) { 
     printf("Enter element:"); 
-    array[i] = functionEnterArray(); 
+    array[i] = enterArray(); 
   } 
   for (int i = 0; i < userLength; i++) 
   { 
@@ -35,14 +35,14 @@ int main()
   return 0; 
 } 
 
-int functionEnterArray(void) { 
+int enterArray(void) { 
   int number; 
   scanf("%d", &number); 
   
   if (getchar() != '\n') { 
     printf("Error number. Try again:"); 
     while (getchar() != '\n'); 
-    number = functionEnterArray(); 
+    number = enterArray(); 
   } 
   
   return number; 
