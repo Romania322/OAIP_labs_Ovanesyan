@@ -56,11 +56,7 @@ int enterSum(void)
 		{
 			sum = sum + mainArray[i];
 		}
-		else
-		{
-			return sum;
-			break;
-		}
+		
 	}
-
+	return sum;
 }
