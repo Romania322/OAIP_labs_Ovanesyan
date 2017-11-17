@@ -1,4 +1,10 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+*/
+	Ованесян Даниил Арменович
+	КТБО1-8 
+	4 лаба, 10 вариант
+	Поменять последнюю и первую букву местами
+*/
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h> 
 #include <conio.h> 
 #include <locale> 
