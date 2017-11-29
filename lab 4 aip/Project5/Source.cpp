@@ -1,4 +1,8 @@
-
+/*
+	Ованесян Даниил 4 лаба 10 вариант
+	Сделать считывание данных с файла 
+	КТБО 1-8
+/*
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h> 
 #include <conio.h> 
@@ -6,8 +10,8 @@
 #define MAX_LENGTH 1024
 
 int replace(int stop , char *text );
-int ret(FILE *File);
-int pop(int stop, char *text, FILE *SourceFile);
+int lenght(FILE *File);
+int readit(int stop, char *text, FILE *SourceFile);
 
 int main()
 {
@@ -17,16 +21,15 @@ int main()
 	FILE *NewFile = fopen("text2.txt", "w");
 	char text[MAX_LENGTH];
 	int stop;
-	
-	stop = ret(File);
-	
+	stop = lenght(File);
 	fclose(File);
 	FILE *SourceFile = fopen("text1.txt", "r");
-	pop(stop, text, SourceFile);
-	
+	readit(stop, text, SourceFile);
 	replace(stop, text);
 	for (int i = 0; i < stop; i++)
+	{
 		fprintf(NewFile, "%c", text[i]);
+	}
 	fclose(NewFile);
 	fclose(SourceFile);
 	
@@ -34,15 +37,17 @@ int main()
 	return 0;
 }
 
-int ret(FILE *SourceFile)
+int lenght(FILE *SourceFile)
 {
 	int stop = 0;
 	for (int i = 0; fgetc(SourceFile) != EOF; i++)
+	{
 		stop = stop + 1;
+		}
 	return stop;
 }
 
-int pop(int stop, char *text, FILE *SourceFile)
+int readit(int stop, char *text, FILE *SourceFile)
 {
 	int i;
 	for (i = 0; i < stop; i++)
