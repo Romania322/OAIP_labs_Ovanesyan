@@ -71,7 +71,7 @@ int replace(int stop, char *text)
 
 	for (int i = 1; text[i] != '\0'; i++)
 	{
-		if (text[i] == ' ')
+		if (text[i] == ' ' || text[i] == '\n')
 		{
 			k = i + 1;
 		}
