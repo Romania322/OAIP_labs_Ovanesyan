@@ -1,0 +1,13 @@
+﻿  Source.cpp
+d:\c++ oaip\almost5lab\almost5lab\source.cpp(209): warning C4477: "scanf_s": в строке форматирования "%d" требуется аргумент типа "int *", но вариативный аргумент "1" имеет тип "int"
+d:\c++ oaip\almost5lab\almost5lab\source.cpp(258): warning C4473: "fprintf": передано недостаточно аргументов для строки формата
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(258): note: заполнители и их параметры ожидают переменное число аргументов в количестве 8, но было предоставлено 7
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(258): note: отсутствующий вариативный аргумент "8" требуется для строки форматирования "%s"
+d:\c++ oaip\almost5lab\almost5lab\source.cpp(283): warning C4473: "fscanf": передано недостаточно аргументов для строки формата
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(283): note: заполнители и их параметры ожидают переменное число аргументов в количестве 8, но было предоставлено 7
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(283): note: отсутствующий вариативный аргумент "8" требуется для строки форматирования "%s"
+d:\c++ oaip\almost5lab\almost5lab\source.cpp(285): warning C4473: "fscanf": передано недостаточно аргументов для строки формата
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(285): note: заполнители и их параметры ожидают переменное число аргументов в количестве 8, но было предоставлено 7
+  d:\c++ oaip\almost5lab\almost5lab\source.cpp(285): note: отсутствующий вариативный аргумент "8" требуется для строки форматирования "%s"
+d:\c++ oaip\almost5lab\almost5lab\source.cpp(324): warning C4018: >: несоответствие типов со знаком и без знака
+  almost5lab.vcxproj -> D:\C++ OAIP\almost5lab\Debug\almost5lab.exe
