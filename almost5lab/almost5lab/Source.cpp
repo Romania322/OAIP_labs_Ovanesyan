@@ -15,7 +15,7 @@
 */
 
 #define _CRT_SECURE_NO_WARNINGS 
-#pragma warning(disable : 4996)
+
 #include "locale"
 #include <stdio.h>
 
@@ -36,11 +36,14 @@ struct country
 
 };
 
+void sorting_f(int number, int field, struct country *gos);
+void sort(int number_of_structers, struct country *gos);
 void addStruct(int k, struct country *gos);
 void outputFile(int p, struct country *gos);
 int gettingStructs(struct country *gos);
-void sortirovkaGosudarstva(country *gos);
-void swap(struct country &gos1, struct country &gos2);
+//void sortirovkaGosudarstva(country *gos);
+//void swap(struct country &gos1, struct country &gos2);
+void new_INPUT(int number_of_structures, struct country *gos);
 
 int main()
 {
@@ -215,28 +218,11 @@ int main()
 			system("cls");
 			break;
 		case 4:
-			printf(" --- Uporjadochenie massiva struktur po zadannomu polju --- \n");
-			printf("(vvedite nomer)\n");
-			printf("--- Sortirovka po zadannomu polju --- \n");
-			printf("1. Sortirovka po gosudarstvu.\n");
-
-
-			printf("--> ");
-			scanf_s("%d", sorting);
-			system("cls");
-
-
-			switch (sorting)
-			{
-			case 1: printf(" --- Sortirovka po gosudarstvu --- \n");
-				sortirovkaGosudarstva(gos);
-
-				break;
-
-
-			default: printf("Takogo varianta vybora net.");
-				break;
-			}
+		{
+			
+			sort(number_of_structures, gos);
+			break;
+		}
 
 
 		case 5:
@@ -275,6 +261,103 @@ void addStruct(int k, struct country *gos)
 	fclose(text_file_output);
 }
 
+int sorting_comparison(int field, int i, struct country *gos)
+{
+	int code;
+	switch (field) {
+	case 1:code = strcmp(gos[i + 1].nameCountry, gos[i].nameCountry); return code;
+	case 2:code = strcmp(gos[i + 1].maincity, gos[i].maincity); return code;
+	case 3:code = strcmp(gos[i + 1].language, gos[i].language); return code;
+	case 4:code = strcmp(gos[i + 1].peoples, gos[i].peoples); return code;
+	case 5:code = strcmp(gos[i + 1].ploshad, gos[i].ploshad); return code;
+	case 6:code = strcmp(gos[i + 1].money, gos[i].money); return code;
+	case 7:code = strcmp(gos[i + 1].maincity, gos[i].maincity); return code;
+
+	}
+}
+
+void sort(int number_of_structures, struct country *gos)
+{
+	int sorting_s = 0;
+	printf(" --- Uporjadochenie massiva struktur po zadannomu polju --- \n");
+	printf("(vvedite nomer)\n");
+	printf("--- Sortirovka po zadannomu polju --- \n");
+	printf("1. Sortirovka po gosadarstvu.\n");
+	printf("2. Sortirovka po stolice.\n");
+	printf("3. Sortirovka po yaziky.\n");
+	printf("4. Sortirovka po kol- vu ludiam.\n");
+	printf("5. Sortirovka po ploshadi.\n");
+	printf("5. Sortirovka po dengam.\n");
+	printf("6. Sortirovka po gosstroyu.\n");
+
+	printf("--> ");
+	scanf("%d", &sorting_s);
+	system("cls");
+
+
+
+	if (number_of_structures != 0)
+
+	{
+		switch (sorting_s)
+		{
+		case 1: printf(" --- Sortirovka po gosudarstvu --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 2: printf(" --- Sortirovka po stolice --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 3: printf(" --- Sortirovka po yaziky --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 4: printf(" --- Sortirovka po kol-vu ludei --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 5: printf(" --- Sortirovka po ploshadi --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 6: printf(" --- Sortirovka po money --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+		case 7: printf(" --- Sortirovka po gosstroyu --- \n"); sorting_f(number_of_structures, sorting_s, gos);
+			break;
+
+
+		default: printf("Takogo varianta vybora net.");
+		}
+		printf("Structura otsortirovanna");
+		system("pause");
+	}
+	else
+	{
+		printf("--- Zapolnennyh struktur net ---\n");
+		system("pause");
+	}
+	system("cls");
+
+
+}
+
+
+
+void sorting_s(int number, int field, struct country *gos)
+{
+
+	for (int i = 0; i < number; i++)
+	{
+		for (int j = 0; j < number - i - 1; j++)
+		{
+			if ((sorting_comparison(field, j, gos)) < 0)
+			{
+				country Buff = gos[j];
+				gos[j] = gos[j + 1];
+				gos[j + 1] = Buff;
+			}
+		}
+	}
+	outputFile(number, gos);
+	new_INPUT(number, gos);
+	system("pause");
+	system("cls");
+}
+
+
+
+
 void outputFile(int p, struct country *gos)
 {
 	printf("Gosudarstvo --> %s\t", gos[p].nameCountry);
@@ -285,6 +368,17 @@ void outputFile(int p, struct country *gos)
 	printf("Dengi --> %s\t", gos[p].money);
 	printf("Gosstroy --> %s\t", gos[p].gosstroy);
 
+}
+
+void new_INPUT(int number_of_structures, struct country *gos)
+{
+	FILE *text_file_output = fopen("output.txt", "w");
+	int i = 0;
+	for (i = 0; i < number_of_structures; i++)
+	{
+		fprintf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\n", &gos[i].nameCountry, &gos[i].maincity, &gos[i].language, &gos[i].peoples, &gos[i].ploshad, &gos[i].money, &gos[i].gosstroy);
+	}
+	fclose(text_file_output);
 }
 
 
@@ -313,68 +407,5 @@ int gettingStructs(struct country *gos)
 	return k;
 }
 
-void sortirovkaGosudarstva(country *gos)
-{
-	FILE *text_file_output = fopen("output.txt", "r");
-	FILE *text_file_output_test = fopen("output.txt", "r");
-	int k = 0;
-	int max = 0;
-	for (int i = 0; i < k; i++)
-	{
-		if (strlen(gos[i].nameCountry) > max)
-		{
-			max = strlen(gos[i].nameCountry);
-		}
-
-	}
-	for (int i = 0; i<max; i++)
-	{
-		for (int j = 0; j < k; j++)
-		{
-			for (int h = j + 1; h < k; h++)
-			{
-				if (gos[j].nameCountry[i] && gos[h].nameCountry[i])
-				{
-					if (i == 0)
-					{
-						if (int(gos[j].nameCountry[0]) > int(gos[h].nameCountry[0]))
-						{
-							swap(gos[j], gos[h]);
-						}
-					}
-					if (i != 0)
-					{
-						if (int(gos[j].nameCountry[i]) > int(gos[h].nameCountry[i]))
-						{
-							int tr = 1;
-							for (int q = i - 1; q> 0; q--)
-							{
-								if (int(gos[j].nameCountry[q]) != int(gos[h].nameCountry[q]))
-								{
-									tr = 0;
-									break;
-								}
-							}
-							if (tr == 1)
-							{
-								swap(gos[j], gos[h]);
-							}
-						}
-					}
-				}
-			}
-		}
 
 
-	}
-	fclose(text_file_output);
-	fclose(text_file_output_test);
-}
-
-void swap(struct country &gos1, struct country &gos2)
-{
-	struct country buf;
-	buf = gos2;
-	gos2 = gos1;
-	gos1 = buf;
-}
