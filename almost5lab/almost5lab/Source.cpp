@@ -1,36 +1,52 @@
+/* 
+Ованесян Даниил 
+Лабораторная работа №5 
+Вариант 10 
+Задание:Написать программу, которая записывает с клавиатуры в файл структуру 
+согласно выданному варианту задания. В качестве разделителя полей структуры 
+использовать символ табуляции. В программе реализовать: 
+а) дополнение существующего массива структур новыми структурами; 
+б) поиск структуры с заданным значением выбранного элемента; 
+в) вывод на экран содержимого массива структур; 
+г) упорядочение массива структур по заданному полю (элементу), например 
+государство по численности. 
+Вариант задания: «Государство»: название страны, столица, язык, население, площадь 
+территории, денежная единица, государственный строй. 
+*/
 
+#define _CRT_SECURE_NO_WARNINGS 
 
-
-
-#include "locale"	//chto za hren' tut tipo iz C++
+#include "locale"
 #include <stdio.h>
-#pragma warning(disable : 4996)	//bez jetogo u menja oshibka
-#define N 1000	//dlinna massivov v strukturah
-#define Y 100	//kolichestvo struktur
+
+
+#define LENGTH_WORD_FOR_STRUCT 1000
+#define COUNT_STRUCTS 100
 using namespace std;
 
-struct Mag	//struktura koroch
+struct country
 {
-	char gosvo[N];
-	char maincity[N];
-	char language[N];
-	char peoples[N];
-	char ploshad[N];
-	char money[N];
-	char gosstroy[N];
+	char nameCountry[LENGTH_WORD_FOR_STRUCT];
+	char maincity[LENGTH_WORD_FOR_STRUCT];
+	char language[LENGTH_WORD_FOR_STRUCT];
+	char peoples[LENGTH_WORD_FOR_STRUCT];
+	char ploshad[LENGTH_WORD_FOR_STRUCT];
+	char money[LENGTH_WORD_FOR_STRUCT];
+	char gosstroy[LENGTH_WORD_FOR_STRUCT];
 
-} Gos[Y];
+};
 
-void INPUT(int k);
-void OUTPUT(int p);
-int INITIALIZATION();
-void sortirovka_gosudarstva(Mag *Gos);
-void obmen(struct Mag &Gos1, struct Mag &Gos2);
+void addStruct(int k , struct country *gos);
+void outputFile(int p, struct country *gos);
+int gettingStructs(struct country *gos);
+void sortirovkaGosudarstva(country *gos);
+void swap(struct country &gos1, struct country &gos2);
 
 int main()
 {
+	struct country gos[COUNT_STRUCTS];
 	int main_screen = 0;
-	int number_of_structures = INITIALIZATION();
+	int number_of_structures = gettingStructs(gos);
 	int sorting = 0;
 	int search = 0;
 	int not_yes_structs = 0;
@@ -46,15 +62,15 @@ int main()
 		printf("5. Vyhod iz programmy.\n");
 		printf("--> ");
 		scanf_s("%d", &main_screen);
-		system("cls");	//ochishhaet jekran
+		system("cls");
 
 		switch (main_screen)
 		{
 		case 1:
 			printf("--- Dopolnit' massiv struktur novymi strukturami ---\n");
-			if (number_of_structures < Y)	//proverka 
+			if (number_of_structures < COUNT_STRUCTS)
 			{
-				INPUT(number_of_structures);
+				addStruct(number_of_structures , gos);
 				number_of_structures++;
 				system("pause");
 				system("cls");
@@ -86,33 +102,33 @@ int main()
 				case 1: printf(" --- Poisk po nazvaniyu gosudarstva --- \n"); printf("Vvedite nazvanie gosva\n -->"); char search_gosvo[N]; scanf("%s", &search_gosvo);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_gosvo, Gos[i].gosvo))	//tip sravnivaet kody strok
+						if (!strcmp(search_gosvo, gos[i].nameCountry))
 						{
 							not_yes_structs++;
-							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1); //posmoti kod sam znaesh' kogo
-							OUTPUT(i);
+							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
+							outputFile(i , gos);
 						}
 					}
 					break;
 				case 2: printf(" --- Poisk po glavnomu gorodu --- \n"); printf("Vvedite glavniy gorod\n -->"); char search_maincity[N]; scanf("%s", &search_maincity);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_maincity, Gos[i].maincity))
+						if (!strcmp(search_maincity, gos[i].maincity))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 					break;
 				case 3: printf(" --- Poisk po yaziky --- \n"); printf("Vvedite yazik\n -->"); char search_language[N]; scanf("%s", &search_language);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_language, Gos[i].language))
+						if (!strcmp(search_language, gos[i].language))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 
@@ -120,11 +136,11 @@ int main()
 				case 4: printf(" --- Poisk ludiam --- \n"); printf("Vvedite kol-vo ludei\n -->"); char search_peoples[N]; scanf("%s", &search_peoples);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_peoples, Gos[i].peoples))
+						if (!strcmp(search_peoples, gos[i].peoples))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 
@@ -132,11 +148,11 @@ int main()
 				case 5: printf(" --- Poisk po ploshadi --- \n"); printf("Vvediteploshad\n -->"); char search_ploshad[N]; scanf("%s", &search_ploshad);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_ploshad, Gos[i].ploshad))
+						if (!strcmp(search_ploshad, gos[i].ploshad))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 
@@ -144,11 +160,11 @@ int main()
 				case 6: printf(" --- Poisk po dengam --- \n"); printf("Vvedite kol-vo deneg(rubley)\n -->"); char search_money[N]; scanf("%s", &search_money);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_money, Gos[i].money))
+						if (!strcmp(search_money, gos[i].money))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 
@@ -156,18 +172,18 @@ int main()
 				case 7: printf(" --- Poisk po gosstyoryu --- \n"); printf("Vvedite gosstroy\n -->"); char search_gosstroy[N]; scanf("%s", &search_gosstroy);
 					for (i = 0; i<number_of_structures; i++)
 					{
-						if (!strcmp(search_gosstroy, Gos[i].gosstroy))
+						if (!strcmp(search_gosstroy, gos[i].gosstroy))
 						{
 							not_yes_structs++;
 							printf("Struktura najdenna\n Nomer struktury -> %d\n", i + 1);
-							OUTPUT(i);
+							outputFile(i , gos);
 						}
 					}
 
 					break;
 				default: printf("Takogo varianta vybora net.");
 				}
-				if (not_yes_structs == 0) //koroch jeto nuzhno vyvesti za kejsi ti v konec svicha
+				if (not_yes_structs == 0)
 				{
 					printf("Struktura ne najdenna\n");
 				}
@@ -184,7 +200,7 @@ int main()
 			break;
 		case 3:
 			printf("--- Vyvod na jekran soderzhimogo massiva struktur ---\n");
-			if (number_of_structures == 0)	//proverka na nalichie zapolnennyh struktur
+			if (number_of_structures == 0)
 			{
 				printf("Zapolnennyh struktur net\n");
 			}
@@ -192,7 +208,7 @@ int main()
 			{
 				for (i = 0; i < number_of_structures; i++)
 				{
-					OUTPUT(i);
+					outputFile(i , gos);
 				}
 			}
 			system("pause");
@@ -213,7 +229,7 @@ int main()
 			switch (sorting)
 			{
 			case 1: printf(" --- Sortirovka po gosudarstvu --- \n");
-				sortirovka_gosudarstva(Gos);
+				sortirovkaGosudarstva(gos);
 
 				break;
 
@@ -224,7 +240,7 @@ int main()
 
 
 		case 5:
-			exit(0);	//vyhod iz programmy
+			exit(0);
 			break;
 		default: printf("Takogo varianta vybora net.");
 		}
@@ -233,56 +249,56 @@ int main()
 	return 0;
 }
 
-void INPUT(int k)	//funkcija dlja vvoda dannyh v strukturu, a tak zhe zapis' dannyh v fajl	
+void addStruct(int k, struct country *gos)	
 {
 	printf("Vvod struktur\n");
 	printf("Vvedite nazvanie gosudarstva --> ");
-	scanf("%s", &Gos[k].gosvo);
+	scanf("%s", &gos[k].nameCountry);
 	printf("Vvedite nazvanie glavnogo goroda --> ");
-	scanf("%s", &Gos[k].maincity);
+	scanf("%s", &gos[k].maincity);
 	printf("Vvedite yazik --> ");
-	scanf("%s", &Gos[k].language);
+	scanf("%s", &gos[k].language);
 	printf("Vvedite kol-vo ludei --> ");
-	scanf("%s", &Gos[k].peoples);
+	scanf("%s", &gos[k].peoples);
 	printf("Vvedite ploshad gos-va --> ");
-	scanf("%s", &Gos[k].ploshad);
+	scanf("%s", &gos[k].ploshad);
 	printf("Vvedite kol-vo deneg --> ");
-	scanf("%s", &Gos[k].money);
+	scanf("%s", &gos[k].money);
 	printf("Vvedite gosstroy --> ");
-	scanf("%s", &Gos[k].gosstroy);
+	scanf("%s", &gos[k].gosstroy);
 
 	printf("Struktura vvedenna.\n\n");
 
-	FILE *text_file_output = fopen("output.txt", "a");	//otkryti fajla 
+	FILE *text_file_output = fopen("output.txt", "a");
 
-	fprintf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", &Gos[k].gosvo, &Gos[k].maincity, &Gos[k].language, &Gos[k].peoples, &Gos[k].ploshad, &Gos[k].money, &Gos[k].gosstroy);
+	fprintf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", &gos[k].nameCountry, &gos[k].maincity, &gos[k].language, &gos[k].peoples, &gos[k].ploshad, &gos[k].money, &gos[k].gosstroy);
 	fclose(text_file_output);
 }
 
-void OUTPUT(int p)
+void outputFile(int p, struct country *gos)
 {
-	printf("Gosudarstvo --> %s\t", Gos[p].gosvo);
-	printf("Glavni gorod --> %s\t", Gos[p].maincity);
-	printf("Yazik --> %s\t", Gos[p].language);
-	printf("Ludi --> %s\t", Gos[p].peoples);
-	printf("Ploshad --> %s\t", Gos[p].ploshad);
-	printf("Dengi --> %s\t", Gos[p].money);
-	printf("Gosstroy --> %s\t", Gos[p].gosstroy);
+	printf("Gosudarstvo --> %s\t", gos[p].nameCountry);
+	printf("Glavni gorod --> %s\t", gos[p].maincity);
+	printf("Yazik --> %s\t", gos[p].language);
+	printf("Ludi --> %s\t", gos[p].peoples);
+	printf("Ploshad --> %s\t", gos[p].ploshad);
+	printf("Dengi --> %s\t", gos[p].money);
+	printf("Gosstroy --> %s\t", gos[p].gosstroy);
 
 }
 
 
-int INITIALIZATION()	//inicializacija(pri otkrytii programmy ona vvodit v struktury dannye iz fajla)
+int gettingStructs(struct country *gos)
 {
 	FILE *text_file_output = fopen("output.txt", "r");
-	FILE *text_file_output_test = fopen("output.txt", "r");	//vtoroj raz otkryvaem fajl dlja proverki strok 
+	FILE *text_file_output_test = fopen("output.txt", "r");
 	int k = 0;
 
 	if (text_file_output != NULL)
 	{
-		while (fscanf(text_file_output_test, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &Gos[k].gosvo, &Gos[k].maincity, &Gos[k].language, &Gos[k].peoples, &Gos[k].ploshad, &Gos[k].money, &Gos[k].gosstroy) != EOF)
+		while (fscanf(text_file_output_test, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &gos[k].nameCountry, &gos[k].maincity, &gos[k].language, &gos[k].peoples, &gos[k].ploshad, &gos[k].money, &gos[k].gosstroy) != EOF)
 		{
-			fscanf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &Gos[k].gosvo, &Gos[k].maincity, &Gos[k].language, &Gos[k].peoples, &Gos[k].ploshad, &Gos[k].money, &Gos[k].gosstroy);
+			fscanf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &gos[k].nameCountry, &gos[k].maincity, &gos[k].language, &gos[k].peoples, &gos[k].ploshad, &gos[k].money, &gos[k].gosstroy);
 			k++;
 		}
 	}
@@ -297,33 +313,17 @@ int INITIALIZATION()	//inicializacija(pri otkrytii programmy ona vvodit v strukt
 	return k;
 }
 
-void sortirovka_gosudarstva(Mag *Gos)//struct Mag *Gos[])
+void sortirovkaGosudarstva(country *gos)
 {
 	FILE *text_file_output = fopen("output.txt", "r");
 	FILE *text_file_output_test = fopen("output.txt", "r");
 	int k = 0;
-
-	//if (text_file_output != NULL)
-	//{
-	//	while (fscanf(text_file_output_test, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &Gos[k].gosvo, &Gos[k].maincity, &Gos[k].language, &Gos[k].peoples, &Gos[k].ploshad, &Gos[k].money, &Gos[k].gosstroy) != EOF)
-	//	{
-	//		fscanf(text_file_output, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", &Gos[k].gosvo, &Gos[k].maincity, &Gos[k].language, &Gos[k].peoples, &Gos[k].ploshad, &Gos[k].money, &Gos[k].gosstroy);
-	//		k++;
-	//	}
-	//}
-	//else
-	//{
-	//	printf("--- Fajla net ili on ne otkrylsja ---");
-	//	system("pause");
-	//	exit(0);
-	//}
-
 	int max = 0;
 	for (int i = 0; i < k; i++)
 	{
-		if (strlen(Gos[i].gosvo) > max)
+		if (strlen(gos[i].nameCountry) > max)
 		{
-			max = strlen(Gos[i].gosvo);
+			max = strlen(gos[i].nameCountry);
 		}
 
 	}
@@ -333,23 +333,23 @@ void sortirovka_gosudarstva(Mag *Gos)//struct Mag *Gos[])
 		{
 			for (int h = j + 1; h < k; h++)
 			{
-				if (Gos[j].gosvo[i] && Gos[h].gosvo[i])
+				if (gos[j].nameCountry[i] && gos[h].nameCountry[i])
 				{
 					if (i == 0)
 					{
-						if (int(Gos[j].gosvo[0]) > int(Gos[h].gosvo[0]))
+						if (int(gos[j].nameCountry[0]) > int(gos[h].nameCountry[0]))
 						{
-							obmen(Gos[j], Gos[h]);
+							swap(gos[j], gos[h]);
 						}
 					}
 					if (i != 0)
 					{
-						if (int(Gos[j].gosvo[i]) > int(Gos[h].gosvo[i]))
+						if (int(gos[j].nameCountry[i]) > int(gos[h].nameCountry[i]))
 						{
 							int tr = 1;
 							for (int q = i - 1; q> 0; q--)
 							{
-								if (int(Gos[j].gosvo[q]) != int(Gos[h].gosvo[q]))
+								if (int(gos[j].nameCountry[q]) != int(gos[h].nameCountry[q]))
 								{
 									tr = 0;
 									break;
@@ -357,7 +357,7 @@ void sortirovka_gosudarstva(Mag *Gos)//struct Mag *Gos[])
 							}
 							if (tr == 1)
 							{
-								obmen(Gos[j], Gos[h]);
+								swap(gos[j], gos[h]);
 							}
 						}
 					}
@@ -371,10 +371,10 @@ void sortirovka_gosudarstva(Mag *Gos)//struct Mag *Gos[])
 	fclose(text_file_output_test);
 }
 
-void obmen(struct Mag &Gos1, struct Mag &Gos2)
+void swap(struct country &gos1, struct country &gos2)
 {
-	struct Mag buf;
-	buf = Gos2;
-	Gos2 = Gos1;
-	Gos1 = buf;
+	struct country buf;
+	buf = gos2;
+	gos2 = gos1;
+	gos1 = buf;
 }
