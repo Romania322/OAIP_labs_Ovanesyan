@@ -9,9 +9,9 @@
 #include <locale>
 #define MAX_LENGTH 1024
 
-int replace(int stop, char *text);
-int lenght(FILE *File);
-int readit(int stop, char *text, FILE *SourceFile);
+int replace_text(int stop, char *text);
+int Get_lenght_stroki(FILE *File);
+int read_file(int stop, char *text, FILE *SourceFile);
 
 int main()
 {
@@ -27,12 +27,12 @@ int main()
 	}
 	char text[MAX_LENGTH];
 	int stop;
-	stop = lenght(File);
+	stop = Get_lenght_stroki(File);
 	fclose(File);
 	FILE *SourceFile = fopen("text1.txt", "r");
-	readit(stop, text, SourceFile);
+	read_file(stop, text, SourceFile);
 
-	replace(stop, text);
+	replace_text(stop, text);
 	for (int i = 0; i < stop; i++)
 	{
 		fprintf(NewFile, "%c", text[i]);
@@ -44,17 +44,17 @@ int main()
 	return 0;
 }
 
-int lenght(FILE *SourceFile)
+int Get_lenght_stroki(FILE *SourceFile)
 {
 	int stop = 0;
-	for (int i = 0; fgetc(SourceFile) != EOF; i++)
+	while(fgetc(SourceFile) != EOF)
 	{
 		stop = stop + 1;
 	}
 	return stop;
 }
 
-int readit(int stop, char *text, FILE *SourceFile)
+int read_file(int stop, char *text, FILE *SourceFile)
 {
 	int i;
 	for (i = 0; i < stop; i++)
@@ -64,7 +64,7 @@ int readit(int stop, char *text, FILE *SourceFile)
 	return 0;
 }
 
-int replace(int stop, char *text)
+int replace_text(int stop, char *text)
 {
 	char buff;
 	int k = 0;
